@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>همخرید - با هم بخرید، هوشمندانه خرج کنید!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #00AEEF 0%, #2EBF70 100%); /* Blue to Green gradient */
+        }
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .price-strike {
+            text-decoration: line-through;
+            color: #f87171; /* red-400 */
+            opacity: 0.8;
+        }
+        .price-new {
+            color: #34d399; /* emerald-400 */
+            font-weight: 900; /* Extra bold */
+            font-size: 1.75em; /* Larger new price */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            border-bottom: 4px solid #2EBF70; /* Green accent from logo */
+            padding-bottom: 0.75rem;
+            display: inline-block;
+            font-weight: 700;
+        }
+        .benefit-card, .product-card, .how-it-works-card, .featured-deal-card {
+            background-color: #fff;
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb; /* gray-200 */
+        }
+        .benefit-card:hover, .product-card:hover, .how-it-works-card:hover, .featured-deal-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+        .footer-bg {
+            background-color: #1f2937; /* gray-800 */
+        }
+        .logo-text {
+            font-weight: 900; /* Extra bold for logo */
+            font-size: 2.5rem; /* Larger logo text */
+            color: #00AEEF;
+        }
+        .logo-handshake { 
+            color: #2EBF70; 
+        }
+        .product-card img {
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+        }
+        .product-card .original-price {
+            font-size: 0.9em;
+        }
+        .product-card .group-price {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2EBF70; 
+        }
+        .product-join-button, .gemini-button { /* Added .gemini-button */
+            background-color: #00AEEF; 
+        }
+        .product-join-button:hover, .gemini-button:hover { /* Added .gemini-button */
+            background-color: #0095c7; 
+        }
+        .gemini-button-small {
+            background-color: #fbbf24; /* amber-400 */
+            color: #1f2937; /* gray-800 */
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            border-radius: 0.375rem; /* rounded-md */
+        }
+        .gemini-button-small:hover {
+            background-color: #f59e0b; /* amber-500 */
+        }
+        .animated-text-fill {
+           background: linear-gradient(to right, #FFD700, #FFA500, #FF6347);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           animation: gradient-animation 5s ease infinite;
+           background-size: 200% 200%;
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .progress-bar-bg {
+            background-color: #e9ecef; 
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            background-color: #2EBF70; 
+            height: 100%;
+            transition: width 0.5s ease-in-out;
+            text-align: center;
+            color: white;
+            font-size: 0.8rem;
+            line-height: 1.25rem; 
+        }
+        .featured-deal-bg {
+            background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe); 
+        }
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 25px;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 600px;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            float: left; /* Position to the left for RTL */
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #00AEEF; /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2 space-x-reverse">
+                <img src="/home/mohammadhdp23/Documents/hamkharid.png" alt="لوگوی همخرید" class="h-10 sm:h-12"
+                onerror="this.onerror=null; this.src='/home/mohammadhdp23/Documents/hamkharid.png';">
+            </a>
+            <nav class="hidden md:flex space-x-4 space-x-reverse items-center">
+                <a href="#how-it-works" class="text-gray-600 hover:text-green-500 px-3 py-2 rounded-md text-sm font-medium">چطور کار می‌کنه؟</a>
+                <a href="#featured-group-buy" class="text-gray-600 hover:text-green-500 px-3 py-2 rounded-md text-sm font-medium">پیشنهاد ویژه</a>
+                <a href="#digital-products" class="text-gray-600 hover:text-green-500 px-3 py-2 rounded-md text-sm font-medium">محصولات دیجیتال</a>
+                <a href="#benefits" class="text-gray-600 hover:text-green-500 px-3 py-2 rounded-md text-sm font-medium">چرا همخرید؟</a>
+                <a href="#faq" class="text-gray-600 hover:text-green-500 px-3 py-2 rounded-md text-sm font-medium">سوالات متداول</a>
+                <a href="#cta" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-5 rounded-lg cta-button text-sm">عضویت / ورود</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 hover:text-green-500 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
+            <a href="#how-it-works" class="block text-gray-600 hover:bg-gray-100 hover:text-green-500 px-4 py-3">چطور کار می‌کنه؟</a>
+            <a href="#featured-group-buy" class="block text-gray-600 hover:bg-gray-100 hover:text-green-500 px-4 py-3">پیشنهاد ویژه</a>
+            <a href="#digital-products" class="block text-gray-600 hover:bg-gray-100 hover:text-green-500 px-4 py-3">محصولات دیجیتال</a>
+            <a href="#benefits" class="block text-gray-600 hover:bg-gray-100 hover:text-green-500 px-4 py-3">چرا همخرید؟</a>
+            <a href="#faq" class="block text-gray-600 hover:bg-gray-100 hover:text-green-500 px-4 py-3">سوالات متداول</a>
+            <a href="#cta" class="block bg-green-500 text-white text-center hover:bg-green-600 font-semibold py-3 px-4 m-2 rounded-lg cta-button">عضویت / ورود</a>
+        </div>
+    </header>
+
+    <section class="hero-bg text-white py-24 md:py-40">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl sm:text-5xl md:text-7xl font-black mb-6 leading-tight">
+                با <span class="animated-text-fill">همخرید</span>، هزینه‌ها نصف می‌شه!
+            </h2>
+            <p class="text-lg sm:text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">
+                دیگه لازم نیست برای محصولات فیزیکی و دیجیتالی مورد علاقه‌ات کل هزینه رو تنهایی پرداخت کنی. با قدرت خرید گروهی، بهترین‌ها رو با کمترین قیمت به دست بیار!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 sm:space-x-reverse mb-12">
+                <div class="bg-white/20 backdrop-blur-sm p-4 rounded-lg text-center">
+                    <span class="text-xl md:text-3xl price-strike">۹۸,۰۰۰ تومان</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-10 md:w-10 text-white inline-block mx-2 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                    <span class="text-2xl md:text-4xl price-new">فقط ۳۸,۰۰۰ تومان!</span>
+                </div>
+            </div>
+            <a href="#digital-products" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 px-10 rounded-lg text-lg sm:text-xl cta-button shadow-xl">
+                مشاهده تخفیف‌های داغ دیجیتال <i class="fas fa-fire ml-2"></i>
+            </a>
+            <div class="mt-16">
+                <img src="https://placehold.co/600x300/FFFFFF/00AEEF?text=تصویر+جذاب+از+خرید+گروهی&font=Vazirmatn" alt="تصویر خرید گروهی موفق" class="mx-auto rounded-xl shadow-2xl"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x300/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="py-16 sm:py-24 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-16 section-title">همخرید چطور جادو می‌کنه؟</h2>
+            <div class="grid md:grid-cols-3 gap-8 lg:gap-12 text-center">
+                <div class="how-it-works-card">
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-blue-100 p-4 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3">۱. گروه رو پیدا کن یا بساز</h3>
+                    <p class="text-gray-600 leading-relaxed">محصولی که می‌خوای رو جستجو کن. اگه گروهی براش نبود، خودت اولین نفر باش و یه گروه خرید جدید با شرایط دلخواهت ایجاد کن.</p>
+                </div>
+                <div class="how-it-works-card">
+                    <div class="flex justify-center mb-6">
+                         <div class="bg-green-100 p-4 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3">۲. بقیه رو دعوت کن (یا صبر کن!)</h3>
+                    <p class="text-gray-600 leading-relaxed">لینک گروه خریدت رو برای دوستات و تو شبکه‌های اجتماعی بفرست. یا اینکه صبر کن تا بقیه کاربرای همخرید پیداش کنن و بهت ملحق بشن.</p>
+                </div>
+                <div class="how-it-works-card">
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-yellow-100 p-4 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0zM12 17.75l-1.172-1.172a4 4 0 00-5.656 0L12 17.75zM12 17.75l1.172-1.172a4 4 0 015.656 0L12 17.75z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3">۳. خرید با تخفیف فضایی!</h3>
+                    <p class="text-gray-600 leading-relaxed">به محض اینکه تعداد اعضای گروه به حد نصاب رسید (یا زمان تعیین شده تموم شد)، همه با هم با اون قیمت باورنکردنی خریدتون رو نهایی می‌کنید. پول کمتر، لذت بیشتر!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured-group-buy" class="py-16 sm:py-24 featured-deal-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 section-title text-gray-800">پیشنهاد ویژه همخرید <i class="fas fa-star text-yellow-400"></i></h2>
+            <p class="text-center text-gray-700 mb-12 max-w-2xl mx-auto">این فرصت طلایی رو از دست نده! با دوستانت همراه شو و این محصول فوق‌العاده رو با قیمتی باورنکردنی بخر.</p>
+            <div class="featured-deal-card max-w-4xl mx-auto bg-white p-6 sm:p-8 md:p-10 rounded-xl shadow-2xl">
+                <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
+                    <div class="text-center">
+                        <img src="https://placehold.co/500x350/007BFF/FFFFFF?text=تلویزیون+۵۵+اینچ+هوشمند&font=Vazirmatn" alt="تلویزیون ۵۵ اینچ هوشمند" class="w-full rounded-lg shadow-lg mb-4"
+                        onerror="this.onerror=null; this.src='https://placehold.co/500x350/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                        <h3 id="featuredProductName" class="text-2xl font-bold text-gray-800 mb-2">تلویزیون ۵۵ اینچ هوشمند 4K</h3>
+                        <div class="mb-3">
+                            <span class="text-lg price-strike text-red-500">۲۵,۰۰۰,۰۰۰ تومان</span>
+                            <p id="featuredProductPrice" class="text-3xl font-extrabold text-green-600">با همخرید: فقط ۱۸,۵۰۰,۰۰۰ تومان!</p>
+                        </div>
+                        <div class="w-full progress-bar-bg h-5 mb-1">
+                            <div class="progress-bar-fill h-5" style="width: 40%;"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4">۲ / ۵ نفر تکمیل شده (۳ نفر تا تخفیف نهایی!)</p>
+                    </div>
+
+                    <div class="text-gray-700">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-3 text-center md:text-right">کالا را با دوستان خود ارزان‌تر خرید!</h3>
+                        <p class="text-md mb-6 text-center md:text-right">با تشکیل گروه، کالاها را با تخفیف استثنایی خریداری کنید. همین الان ثبت‌نام کنید و دوستانتان را دعوت کنید.</p>
+                        <form action="#" method="POST" class="space-y-4">
+                            <div>
+                                <label for="featured-name" class="block text-sm font-medium text-gray-700 sr-only">نام</label>
+                                <input type="text" name="name" id="featured-name" placeholder="نام شما" required
+                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="featured-contact" class="block text-sm font-medium text-gray-700 sr-only">ایمیل یا موبایل</label>
+                                <input type="text" name="contact" id="featured-contact" placeholder="ایمیل یا شماره موبایل" required
+                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            <button type="submit"
+                                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cta-button">
+                                عضویت در گروه و ثبت نام <i class="fas fa-arrow-left mr-2"></i>
+                            </button>
+                        </form>
+                        <div class="mt-6 text-center space-y-3">
+                            <a href="#" class="font-medium text-blue-600 hover:text-blue-500 block">
+                                <i class="fas fa-share-alt ml-1"></i> لینک دعوت به خرید را برای دوستانتان ارسال کنید
+                            </a>
+                            <button id="generateInviteTextButton" class="gemini-button text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">
+                                ✨ دریافت متن خلاقانه برای دعوت دوستان
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="digital-products" class="py-16 sm:py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 section-title">تخفیف‌های داغ دیجیتال <i class="fas fa-compact-disc ml-2 text-blue-500"></i></h2>
+            <p class="text-center text-gray-600 mb-16 max-w-2xl mx-auto">از دوره‌های آموزشی آنلاین گرفته تا جدیدترین بازی‌ها و اشتراک‌های نرم‌افزاری، همه رو با همخرید ارزون‌تر تهیه کن!</p>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/00AEEF/FFFFFF?text=دوره+Coursera&font=Vazirmatn" alt="دوره Coursera" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">دوره تخصصی "هوش مصنوعی" در Coursera</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">مدرس: اندرو اِنگ | سطح: پیشرفته</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۱,۵۰۰,۰۰۰ تومان</span>
+                            <p class="group-price">با همخرید: فقط ۴۵۰,۰۰۰ تومان!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                            <i class="fas fa-users mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/2EBF70/FFFFFF?text=بازی+Steam&font=Vazirmatn" alt="بازی Steam" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">بازی Elden Ring نسخه Deluxe (Steam)</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">سبک: اکشن نقش‌آفرینی | سازنده: FromSoftware</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۲,۲۰۰,۰۰۰ تومان</span>
+                            <p class="group-price">با همخرید: فقط ۹۹۰,۰۰۰ تومان!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                            <i class="fas fa-gamepad mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/FFA500/FFFFFF?text=اشتراک+PlayStation&font=Vazirmatn" alt="اشتراک PlayStation" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">اشتراک ۱۲ ماهه PlayStation Plus Premium</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">دسترسی به صدها بازی و بازی آنلاین</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۳,۵۰۰,۰۰۰ تومان</span>
+                            <p class="group-price">با همخرید: فقط ۱,۷۵۰,۰۰۰ تومان!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                            <i class="fab fa-playstation mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/F44336/FFFFFF?text=اشتراک+Xbox&font=Vazirmatn" alt="اشتراک Xbox" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">اشتراک ۳ ماهه Xbox Game Pass Ultimate</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">شامل EA Play و بازی‌های جدید</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۱,۲۰۰,۰۰۰ تومان</span>
+                            <p class="group-price">با همخرید: فقط ۵۰۰,۰۰۰ تومان!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                           <i class="fab fa-xbox mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/673AB7/FFFFFF?text=دوره+Udemy&font=Vazirmatn" alt="دوره Udemy" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">بوت‌کمپ کامل برنامه‌نویسی وب (Udemy)</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">از مبتدی تا پیشرفته، شامل پروژه‌های عملی</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۹۵۰,۰۰۰ تومان</span>
+                            <p class="group-price">با همخرید: فقط ۲۵۰,۰۰۰ تومان!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                            <i class="fas fa-code mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/00BCD4/FFFFFF?text=نرم+افزار+Adobe&font=Vazirmatn" alt="نرم افزار Adobe" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">اشتراک Adobe Creative Cloud (طرح عکاسی)</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">شامل Photoshop و Lightroom</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۷۰۰,۰۰۰ تومان (ماهانه)</span>
+                            <p class="group-price">با همخرید: فقط ۳۰۰,۰۰۰ تومان (ماهانه)!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                            <i class="fas fa-camera-retro mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/1DB954/FFFFFF?text=اشتراک+Spotify&font=Vazirmatn" alt="اشتراک Spotify" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">اشتراک خانوادگی Spotify Premium (تقسیم هزینه)</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">موسیقی بدون وقفه برای کل خانواده</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۴۵۰,۰۰۰ تومان (سهم شما)</span>
+                            <p class="group-price">با همخرید: فقط ۱۵۰,۰۰۰ تومان (سهم شما)!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                            <i class="fab fa-spotify mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/E50914/FFFFFF?text=اشتراک+Netflix&font=Vazirmatn" alt="اشتراک Netflix" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">اشتراک Netflix Premium (تقسیم هزینه)</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">کیفیت 4K و تماشای همزمان روی چند دستگاه</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۵۵۰,۰۰۰ تومان (سهم شما)</span>
+                            <p class="group-price">با همخرید: فقط ۲۰۰,۰۰۰ تومان (سهم شما)!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                           <i class="fas fa-tv mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/FF9800/FFFFFF?text=بازی+Origin&font=Vazirmatn" alt="بازی Origin" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">بازی FIFA 25 (Origin/EA App)</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">جدیدترین نسخه شبیه‌ساز فوتبال</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۲,۵۰۰,۰۰۰ تومان</span>
+                            <p class="group-price">با همخرید: فقط ۱,۱۰۰,۰۰۰ تومان!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                            <i class="fas fa-futbol mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card flex flex-col">
+                    <img src="https://placehold.co/400x250/4CAF50/FFFFFF?text=نرم+افزار+Office&font=Vazirmatn" alt="نرم افزار Office" class="w-full rounded-t-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=خطا+در+بارگذاری+تصویر&font=Vazirmatn';">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold mb-1 product-name">اشتراک سالانه Microsoft 365 Personal</h3>
+                        <p class="text-sm text-gray-500 mb-2 product-desc-short">شامل Word, Excel, PowerPoint و 1TB OneDrive</p>
+                        <div class="my-2">
+                            <span class="original-price price-strike">۱,۸۰۰,۰۰۰ تومان</span>
+                            <p class="group-price">با همخرید: فقط ۷۵۰,۰۰۰ تومان!</p>
+                        </div>
+                        <button class="generate-desc-button gemini-button-small mt-2 mb-3 w-full cta-button">✨ تولید توضیحات جذاب</button>
+                        <button class="mt-auto w-full product-join-button text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                            <i class="fab fa-windows mr-2"></i> عضویت در گروه خرید
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="py-16 sm:py-24 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-16 section-title">چرا همخرید انتخاب اول حرفه‌ای‌هاست؟</h2>
+            <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
+                <div class="benefit-card text-center">
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-green-100 p-5 rounded-full inline-block">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                           </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3">صرفه‌جویی شگفت‌انگیز در هزینه‌ها</h3>
+                    <p class="text-gray-600 leading-relaxed">با قدرت خرید جمعی، قیمت‌ها رو به چالش بکش! دیگه لازم نیست برای کیفیت بالا، پول زیاد بدی. همخرید یعنی خرید هوشمندانه.</p>
+                </div>
+                <div class="benefit-card text-center">
+                     <div class="flex justify-center mb-6">
+                        <div class="bg-blue-100 p-5 rounded-full inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M5 7h14M5 11h14M5 15h14M12 3v4M8 3v4M16 3v4" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3">دسترسی به تنوع بی‌نظیر محصولات</h3>
+                    <p class="text-gray-600 leading-relaxed">از گجت‌های روز دنیا و محصولات فیزیکی گرفته تا دوره‌های آموزشی، نرم‌افزارها و بازی‌های دیجیتال. هرچیزی که فکرشو بکنی، اینجا پیدا می‌شه!</p>
+                </div>
+                <div class="benefit-card text-center">
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-purple-100 p-5 rounded-full inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8zm-9-4a4 4 0 100 8 4 4 0 000-8z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3">تجربه خرید اجتماعی و هیجان‌انگیز</h3>
+                    <p class="text-gray-600 leading-relaxed">تنها خرید کردن دیگه بسه! با دوستات و بقیه اعضای جامعه همخرید همراه شو، نظراتتون رو به اشتراک بذارید و از یه خرید دسته‌جمعی لذت ببرید.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="faq" class="py-16 sm:py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-16 section-title">سوالات پرتکرار شما</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6">
+                    <div>
+                        <button class="faq-question w-full text-right p-4 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none transition duration-300 ease-in-out">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-lg">همخرید دقیقا چطور کار می‌کنه؟</span>
+                                <i class="fas fa-chevron-down faq-arrow"></i>
+                            </div>
+                        </button>
+                        <div class="faq-answer hidden p-4 bg-gray-50 rounded-b-lg text-gray-700 leading-relaxed">
+                            همخرید یک پلتفرم خرید گروهی است. شما می‌توانید به گروه‌های خرید موجود برای محصولات مختلف بپیوندید یا خودتان یک گروه جدید ایجاد کنید. وقتی تعداد اعضای گروه به حد نصاب برسد، همه اعضا می‌توانند محصول را با قیمت تخفیف‌خورده خریداری کنند.
+                        </div>
+                    </div>
+                     <div>
+                        <button class="faq-question w-full text-right p-4 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none transition duration-300 ease-in-out">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-lg">آیا استفاده از همخرید هزینه‌ای دارد؟</span>
+                                <i class="fas fa-chevron-down faq-arrow"></i>
+                            </div>
+                        </button>
+                        <div class="faq-answer hidden p-4 bg-gray-50 rounded-b-lg text-gray-700 leading-relaxed">
+                            عضویت و استفاده از پلتفرم همخرید برای کاربران کاملا رایگان است. شما فقط هزینه محصولی که خریداری می‌کنید را (با تخفیف گروهی) پرداخت خواهید کرد.
+                        </div>
+                    </div>
+                     <div>
+                        <button class="faq-question w-full text-right p-4 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none transition duration-300 ease-in-out">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-lg">چه نوع محصولاتی در همخرید پیدا می‌شود؟</span>
+                                <i class="fas fa-chevron-down faq-arrow"></i>
+                            </div>
+                        </button>
+                        <div class="faq-answer hidden p-4 bg-gray-50 rounded-b-lg text-gray-700 leading-relaxed">
+                           تقریبا همه چیز! از کالاهای دیجیتال مانند بازی، نرم‌افزار، و دوره‌های آموزشی گرفته تا محصولات فیزیکی مانند لوازم الکترونیکی، پوشاک، و لوازم خانگی. هدف ما ارائه تنوع گسترده با بهترین قیمت‌هاست.
+                        </div>
+                    </div>
+                     <div>
+                        <button class="faq-question w-full text-right p-4 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none transition duration-300 ease-in-out">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-lg">اگر گروه به حد نصاب نرسد چه اتفاقی می‌افتد؟</span>
+                                <i class="fas fa-chevron-down faq-arrow"></i>
+                            </div>
+                        </button>
+                        <div class="faq-answer hidden p-4 bg-gray-50 rounded-b-lg text-gray-700 leading-relaxed">
+                            بستگی به تنظیمات گروه دارد. در برخی موارد، اگر گروه به حد نصاب نرسد، خرید انجام نمی‌شود و هیچ هزینه‌ای از شما کسر نخواهد شد. در موارد دیگر، ممکن است با تعداد کمتر و تخفیف کمتر خرید انجام شود. همیشه شرایط هر گروه به وضوح مشخص است.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="py-20 sm:py-32 hero-bg text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">هنوزم داری گرون می‌خری؟ وقتشه تغییر کنی!</h2>
+            <p class="text-lg sm:text-xl md:text-2xl mb-10 max-w-2xl mx-auto">
+                به هزاران کاربری بپیوند که با همخرید، هوشمندانه‌تر خرید می‌کنند و در هزینه‌هاشون کلی صرفه‌جویی می‌کنند. دیگه وقتشه کمتر پول بدی و بیشتر لذت ببری!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 sm:space-x-reverse">
+                <a href="#" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 px-10 rounded-lg text-lg sm:text-xl cta-button shadow-xl w-full sm:w-auto">
+                    <i class="fas fa-user-plus mr-2"></i> همین الان رایگان عضو شو!
+                </a>
+                <a href="#" class="border-2 border-white text-white font-bold py-4 px-10 rounded-lg text-lg sm:text-xl hover:bg-white hover:text-blue-500 cta-button w-full sm:w-auto">
+                    <i class="fas fa-mobile-alt mr-2"></i> دانلود اپلیکیشن (به زودی...)
+                </a>
+            </div>
+            <div class="mt-16">
+                <img src="https://placehold.co/200x200/FFFFFF/00AEEF?text=QR+Code+همخرید&font=Vazirmatn" alt="QR Code برای اپلیکیشن همخرید" class="mx-auto rounded-lg shadow-xl"
+                onerror="this.onerror=null; this.src='https://placehold.co/200x200/cccccc/333333?text=خطا&font=Vazirmatn';">
+                <p class="mt-3 text-sm">اسکن کن و به دنیای تخفیف‌های گروهی وارد شو!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-bg text-gray-400 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">همخرید</h3>
+                    <p class="text-sm leading-relaxed">همخرید پلتفرمی برای خرید گروهی هوشمندانه است. با ما، کمتر پرداخت کنید و بیشتر لذت ببرید. به جامعه بزرگ ما بپیوندید!</p>
+                     <div class="mt-6">
+                        <img src="https://placehold.co/120x40/FFFFFF/00AEEF?text=HAMKHARID&font=Vazirmatn" alt="لوگوی همخرید در فوتر" class="h-8"
+                        onerror="this.onerror=null; this.src='https://placehold.co/120x40/cccccc/333333?text=Hamkharid&font=Vazirmatn';">
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">لینک‌های مفید</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#how-it-works" class="hover:text-white">چطور کار می‌کنه؟</a></li>
+                        <li><a href="#featured-group-buy" class="hover:text-white">پیشنهاد ویژه</a></li>
+                        <li><a href="#digital-products" class="hover:text-white">محصولات دیجیتال</a></li>
+                        <li><a href="#benefits" class="hover:text-white">مزایای همخرید</a></li>
+                        <li><a href="#faq" class="hover:text-white">سوالات متداول</a></li>
+                        <li><a href="#" class="hover:text-white">تماس با ما</a></li>
+                        <li><a href="#" class="hover:text-white">قوانین و مقررات</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">ما را دنبال کنید</h3>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-telegram-plane"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mt-6 mb-4">نماد اعتماد (جایگاه نمونه)</h3>
+                    <img src="https://placehold.co/100x100/FFFFFF/333333?text=نماد+اعتماد&font=Vazirmatn" alt="نماد اعتماد الکترونیکی" class="h-20"
+                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/333333?text=خطا&font=Vazirmatn';">
+                </div>
+            </div>
+            <hr class="border-gray-700 my-8">
+            <div class="text-center text-sm">
+                <p>&copy; ۱۴۰۴ (2025) همخرید. تمام حقوق این وب‌سایت متعلق به شرکت همخریدان هوشمند پارس (خیالی) می‌باشد.</p>
+                <p class="mt-1">طراحی و توسعه با <i class="fas fa-heart text-red-500"></i> برای خرید ارزان‌تر و هوشمندانه‌تر!</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="geminiModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModalButton">&times;</span>
+            <h3 id="modalTitle" class="text-xl font-semibold mb-4">نتیجه از هوش مصنوعی همخرید ✨</h3>
+            <div id="modalBody" class="text-gray-700 leading-relaxed">
+                <div id="loadingIndicator" class="loading-spinner" style="display: none;"></div>
+                <p id="geminiResponseText"></p>
+            </div>
+            <div class="mt-6 text-left">
+                 <button id="copyToClipboardButton" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg text-sm cta-button">
+                    <i class="fas fa-copy mr-1"></i> کپی کردن متن
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // FAQ Accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const arrow = question.querySelector('.faq-arrow');
+
+                faqQuestions.forEach(q => {
+                    if (q !== question) {
+                        q.nextElementSibling.classList.add('hidden');
+                        q.querySelector('.faq-arrow').classList.remove('rotate-180');
+                         q.classList.remove('bg-gray-200');
+                    }
+                });
+                
+                answer.classList.toggle('hidden');
+                arrow.classList.toggle('rotate-180');
+                question.classList.toggle('bg-gray-200', !answer.classList.contains('hidden'));
+            });
+        });
+
+        // Update progress bar (example)
+        const progressBar = document.querySelector('#featured-group-buy .progress-bar-fill');
+        if (progressBar) {
+            const currentMembers = 2;
+            const targetMembers = 5;
+            const progressPercentage = (currentMembers / targetMembers) * 100;
+            progressBar.style.width = progressPercentage + '%';
+        }
+
+        // Gemini API Integration
+        const geminiModal = document.getElementById('geminiModal');
+        const closeModalButton = document.getElementById('closeModalButton');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const geminiResponseText = document.getElementById('geminiResponseText');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const copyToClipboardButton = document.getElementById('copyToClipboardButton');
+
+        // Function to open the modal
+        function openModal(title = "نتیجه از هوش مصنوعی همخرید ✨") {
+            modalTitle.textContent = title;
+            geminiResponseText.textContent = ''; // Clear previous text
+            loadingIndicator.style.display = 'block'; // Show loading spinner
+            copyToClipboardButton.style.display = 'none'; // Hide copy button initially
+            geminiModal.style.display = 'block';
+        }
+
+        // Function to close the modal
+        if(closeModalButton) {
+            closeModalButton.onclick = function() {
+                geminiModal.style.display = 'none';
+            }
+        }
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == geminiModal) {
+                geminiModal.style.display = 'none';
+            }
+        }
+        
+        // Function to copy text to clipboard
+        if(copyToClipboardButton) {
+            copyToClipboardButton.onclick = function() {
+                const textToCopy = geminiResponseText.innerText;
+                // Using execCommand for broader compatibility in iFrames
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('متن با موفقیت کپی شد!'); // Replace with a custom notification if possible
+                } catch (err) {
+                    console.error('خطا در کپی کردن متن: ', err);
+                    alert('خطا در کپی کردن متن.'); // Replace
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+
+        // Generic function to call Gemini API
+        async function callGeminiAPI(prompt) {
+            openModal(); // Open modal and show loading
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // API key will be injected by the environment if needed
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorBody = await response.text();
+                    throw new Error(`API request failed with status ${response.status}: ${errorBody}`);
+                }
+
+                const result = await response.json();
+                loadingIndicator.style.display = 'none'; // Hide loading spinner
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    geminiResponseText.innerText = text.replace(/\n/g, '<br>'); // Preserve line breaks
+                     copyToClipboardButton.style.display = 'inline-block'; // Show copy button
+                } else {
+                    geminiResponseText.textContent = "متاسفانه پاسخی دریافت نشد. لطفا دوباره تلاش کنید.";
+                    console.error("Unexpected API response structure:", result);
+                }
+            } catch (error) {
+                loadingIndicator.style.display = 'none';
+                geminiResponseText.textContent = `خطا در ارتباط با سرویس هوش مصنوعی: ${error.message}. لطفا کنسول را برای جزئیات بیشتر بررسی کنید.`;
+                console.error("Error calling Gemini API:", error);
+            }
+        }
+
+        // Feature 1: Generate Invite Text for Featured Product
+        const generateInviteTextButton = document.getElementById('generateInviteTextButton');
+        if (generateInviteTextButton) {
+            generateInviteTextButton.addEventListener('click', () => {
+                const productNameElement = document.getElementById('featuredProductName');
+                const productPriceElement = document.getElementById('featuredProductPrice');
+                
+                if (!productNameElement || !productPriceElement) {
+                    console.error("Featured product name or price element not found.");
+                    alert("خطا: اطلاعات محصول ویژه یافت نشد.");
+                    return;
+                }
+
+                const productName = productNameElement.textContent.trim();
+                const productPrice = productPriceElement.textContent.trim().replace('با همخرید: ', '');
+
+                const prompt = `یک متن کوتاه، جذاب و خلاقانه برای دعوت از دوستان جهت شرکت در خرید گروهی محصول '${productName}' با قیمت ویژه '${productPrice}' در وبسایت همخرید بنویس. هدف ترغیب آن‌ها به پیوستن سریع به گروه و استفاده از این فرصت استثنایی است. متن باید دوستانه و دعوت کننده باشد.`;
+                callGeminiAPI(prompt);
+                modalTitle.textContent = "متن دعوت خلاقانه برای دوستان ✨";
+            });
+        }
+
+        // Feature 2: Generate Description for Digital Products
+        const generateDescButtons = document.querySelectorAll('.generate-desc-button');
+        generateDescButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productCard = event.target.closest('.product-card');
+                const productNameElement = productCard.querySelector('.product-name');
+                const productDescShortElement = productCard.querySelector('.product-desc-short');
+
+                if (!productNameElement || !productDescShortElement) {
+                    console.error("Product name or short description element not found in card.");
+                    alert("خطا: اطلاعات محصول یافت نشد.");
+                    return;
+                }
+                const productName = productNameElement.textContent.trim();
+                const productDescShort = productDescShortElement.textContent.trim();
+
+                const prompt = `یک توضیح کوتاه (حدود ۲-۳ جمله)، بسیار جذاب و ترغیب‌کننده برای محصول دیجیتال زیر در وبسایت همخرید بنویس تا کاربران را به خرید گروهی آن تشویق کند:
+نام محصول: ${productName}
+توضیحات اولیه: ${productDescShort}
+بر روی مزایای کلیدی محصول و فرصت خرید آن با قیمت بسیار پایین‌تر از طریق خرید گروهی در همخرید تاکید کن. متن باید انرژی بخش و دعوت کننده باشد.`;
+                callGeminiAPI(prompt);
+                modalTitle.textContent = `توضیحات جذاب برای ${productName} ✨`;
+            });
+        });
+
+    </script>
+
+</body>
+</html>
